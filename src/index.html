@@ -28,7 +28,7 @@
             }
 
             try {
-                const response = await fetch(`http://10.196.232.4:8000/add?num1=${num1}&num2=${num2}`);
+                const response = await fetch("http://10.196.232.4:8000/add?num1=${num1}&num2=${num2}");
                 if (!response.ok) {
                     throw new Error('API request failed');
                 }
