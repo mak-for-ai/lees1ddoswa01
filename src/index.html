@@ -18,13 +18,24 @@
     <h3>Result: <span id="result"></span></h3>
 
     <script>
-        function addNumbers() {
-            let num1 = parseFloat(document.getElementById('num1').value);
-            let num2 = parseFloat(document.getElementById('num2').value);
-            if (!isNaN(num1) && !isNaN(num2)) {
-                document.getElementById('result').innerText = num1 + num2;
-            } else {
-                document.getElementById('result').innerText = "Please enter valid numbers";
+        async function addNumbers() {
+            const num1 = document.getElementById('num1').value;
+            const num2 = document.getElementById('num2').value;
+
+            if (num1 === '' || num2 === '') {
+                document.getElementById('result').innerText = "Please enter both numbers.";
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://10.196.232.4/add?num1=${num1}&num2=${num2}`);
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+                const data = await response.json();
+                document.getElementById('result').innerText = data.sum;
+            } catch (error) {
+                document.getElementById('result').innerText = "Error: " + error.message;
             }
         }
     </script>
